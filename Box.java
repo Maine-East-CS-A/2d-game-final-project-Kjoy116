@@ -46,6 +46,7 @@ public class Box{
         int totalRoll = die1 + die2;
         int numsDown = 0;
         boolean move = false;
+        boolean moving = true;
 
         System.out.println("The first die rolled " + die1 + "\nThe second die rolled " + die2 + "\nCombined roll of " + totalRoll);
         System.out.println("Do you see a move (y/n)?");
@@ -56,48 +57,71 @@ public class Box{
         }
         System.out.println();
 
-        if(move){
+        while(moving){
 
-            System.out.println("Would you like to put down 1 number or 2?");
-            numsDown = Integer.parseInt(scan.nextLine());
+            if(move){
 
-            if(numsDown == 1){
+                System.out.println("Would you like to put down 1 number or 2?");
+                numsDown = Integer.parseInt(scan.nextLine());
 
-                if(nums[0][totalRoll-1] == totalRoll){
-                    nums[0][totalRoll - 1] = 0;
-                    System.out.println("You have shut " + totalRoll);
-                } else {
-                    System.out.println(totalRoll + " is not avalible! Checking your rolled dice avalibility...");
-                
-                    if(nums[0][die1 - 1] == die1 && nums[0][die2 - 1] == die2){
-                        nums[0][die1 - 1] = 0;
-                        nums[0][die2 - 1] = 0;
-                        System.out.println("You have shut " + die1 + " and " + die2);
-                    } else {
-                        System.out.println("You cannot shut any numbers.");
-                    }
+                if(numsDown == 1){
 
-                }
-            } else if(numsDown == 2){
-
-                if(nums[0][die1 - 1] == die1 && nums[0][die2 - 1] == die2){
-                    nums[0][die1 - 1] = 0;
-                    nums[0][die2 - 1] = 0;
-                    System.out.println("You have shut " + die1 + " and " + die2);
-
-                } else {
-                    System.out.println("Those numbers are not both available! Checking your total avalibility...");
-                
                     if(nums[0][totalRoll-1] == totalRoll){
                         nums[0][totalRoll - 1] = 0;
                         System.out.println("You have shut " + totalRoll);
                     } else {
-                        System.out.println("You cannot shut any numbers.");
-                    }
+                        System.out.println(totalRoll + " is not avalible! Checking your rolled dice avalibility...");
+                    
+                        if(nums[0][die1 - 1] == die1 && nums[0][die2 - 1] == die2){
+                            nums[0][die1 - 1] = 0;
+                            nums[0][die2 - 1] = 0;
+                            System.out.println("You have shut " + die1 + " and " + die2);
+                        } else {
+                            System.out.println("You cannot shut any numbers.");
+                        }
 
+                    }
+                } else if(numsDown == 2){
+
+                    if(nums[0][die1 - 1] == die1 && nums[0][die2 - 1] == die2){
+                        nums[0][die1 - 1] = 0;
+                        nums[0][die2 - 1] = 0;
+                        System.out.println("You have shut " + die1 + " and " + die2);
+
+                    } else {
+                        System.out.println("Those numbers are not both available! Checking your total avalibility...");
+                    
+                        if(nums[0][totalRoll-1] == totalRoll){
+                            nums[0][totalRoll - 1] = 0;
+                            System.out.println("You have shut " + totalRoll);
+                        } else {
+                            System.out.println("You cannot shut any numbers.");
+                        }
+
+                    }
+                } else {
+                    System.out.println("You did not enter a valid input! Turn forfeited.\n");
                 }
+            }
+            
+            if(die1 == die2 && this.checkWin().equals("")){
+                System.out.println("\nYou rolled doubles! You get to re-roll!\n");
+                System.out.println(this.toString());
+                System.out.println();
+                die1 = rollDie();
+                die2 = rollDie();
+                totalRoll = die1 + die2;
+                System.out.println("The first die rolled " + die1 + "\nThe second die rolled " + die2 + "\nCombined roll of " + totalRoll);
+                System.out.println("Do you see a move (y/n)?");
+                if(scan.nextLine().equals("y")){
+                    move = true;
+                } else {
+                    move = false;
+                }
+                System.out.println();
             } else {
-                System.out.println("You did not enter a valid input! Turn forfeited.\n");
+                moving = false;
+                break;
             }
         }
     }
@@ -133,49 +157,63 @@ public class Box{
         int die2 = rollDie();
         int totalRoll = die1 + die2;
         int numsDown = 0;
+        boolean moving = true;
 
         System.out.println("The computer's first die rolled " + die1 + "\nThe computer's second die rolled " + die2 + "\nCombined roll of " + totalRoll);
         
-        if(totalRoll >= 7){
-            numsDown = 1;
-        } else {
-            numsDown = 2;
-        }
-
-        if(numsDown == 1){
-
-            if(nums[1][totalRoll-1] == totalRoll){
-                nums[1][totalRoll - 1] = 0;
-                System.out.println("The computer shut " + totalRoll);
+        while(moving){
+            if(totalRoll >= 7){
+                numsDown = 1;
             } else {
-            
-                if(nums[1][die1 - 1] == die1 && nums[1][die2 - 1] == die2){
-                    nums[1][die1 - 1] = 0;
-                    nums[1][die2 - 1] = 0;
-                    System.out.println("The computer shut " + die1 + " and " + die2);
-                } else {
-                    System.out.println("The computer cannot shut any numbers.");
-                }
-
+                numsDown = 2;
             }
-        }
 
-        if(numsDown == 2){
+            if(numsDown == 1){
 
-            if(nums[1][die1 - 1] == die1 && nums[1][die2 - 1] == die2){
-                nums[1][die1 - 1] = 0;
-                nums[1][die2 - 1] = 0;
-                System.out.print("The computer shut " + die1 + " and " + die2);
-
-            } else {
-    
                 if(nums[1][totalRoll-1] == totalRoll){
                     nums[1][totalRoll - 1] = 0;
                     System.out.println("The computer shut " + totalRoll);
                 } else {
-                    System.out.println("The computer cannot shut any numbers.");
-                }
+                
+                    if(nums[1][die1 - 1] == die1 && nums[1][die2 - 1] == die2){
+                        nums[1][die1 - 1] = 0;
+                        nums[1][die2 - 1] = 0;
+                        System.out.println("The computer shut " + die1 + " and " + die2);
+                    } else {
+                        System.out.println("The computer cannot shut any numbers.");
+                    }
 
+                }
+            }
+
+            if(numsDown == 2){
+
+                if(nums[1][die1 - 1] == die1 && nums[1][die2 - 1] == die2){
+                    nums[1][die1 - 1] = 0;
+                    nums[1][die2 - 1] = 0;
+                    System.out.print("The computer shut " + die1 + " and " + die2);
+
+                } else {
+        
+                    if(nums[1][totalRoll-1] == totalRoll){
+                        nums[1][totalRoll - 1] = 0;
+                        System.out.println("The computer shut " + totalRoll);
+                    } else {
+                        System.out.println("The computer cannot shut any numbers.");
+                    }
+
+                }
+            }
+
+            if(die1 == die2 && this.checkWin().equals("")){
+                System.out.println("Since the computer rolled doubles, it rolls again!\n");
+                die1 = rollDie();
+                die2 = rollDie();
+                totalRoll = die1 + die2;
+                System.out.println("The computer's first die rolled " + die1 + "\nThe computer's second die rolled " + die2 + "\nCombined roll of " + totalRoll);
+            } else {
+                moving = false;
+                break;
             }
         }
         
