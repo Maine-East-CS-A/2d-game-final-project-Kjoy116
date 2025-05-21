@@ -110,7 +110,7 @@ public class Box{
             }
         }
 
-        if(closedCount == 12 || closedCount == 11){
+        if(closedCount == 12){
             return "Player wins!";
         }
 
