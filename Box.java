@@ -10,6 +10,8 @@ public class Box{
                 nums[i][j] = j+1;
             }
         }
+
+        System.out.println("Welcome to shut the box! Try to collect all your numbers to win.\nNote that selecting 2 with doubles rolled will result in the number you rolled 2 of being closed.");
     }
 
     public String toString(){
@@ -108,7 +110,7 @@ public class Box{
             }
         }
 
-        if(closedCount == 12){
+        if(closedCount == 12 || closedCount == 11){
             return "Player wins!";
         }
 
