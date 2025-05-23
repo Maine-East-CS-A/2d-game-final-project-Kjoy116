@@ -14,11 +14,13 @@ public class main{
                 playing = true;
                 while(playing){
 
+
                     System.out.println();
                     System.out.println(game.toString());
                     System.out.println();
 
                     game.PlayerTurn();
+
 
                     System.out.println();
                     System.out.println(game.toString());
